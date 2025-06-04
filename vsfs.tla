@@ -3,59 +3,61 @@
 EXTENDS Naturals, Sequences, FiniteSets
 
 CONSTANTS 
-    Blocks,     \* e.g., {1,2,3,4,5,6,7,8}
-    InodeIds    \* e.g., 0..N-1
+    Blocks,     \* e.g., {1,2,3,4,5,6,7,8} - The set of all data blocks in the file system.
+    InodeIds    \* e.g., 0..N-1 - The set of all possible inode identifiers.
 
-\*NullBlock == 0
-NULL == 0
-
-\*TypeOK ==
-\*    /\ freeBlocks \subseteq Blocks
-\*    /\ dir \in [STRING -> InodeIds]
-\*    /\ \A name \in DOMAIN dir:
-\*        LET i == dir[name] IN
-\*            /\ inodes[i].valid
-\*            /\ ~inodes[i].isDir
-\*    /\ \A i \in InodeIds:
-\*        LET inode == inodes[i] IN
-\*            IF inode.valid THEN
-\*                /\ inode.blocks \subseteq Blocks
-\*                /\ inode.blocks \cap freeBlocks = {}
-\*            ELSE
-\*                /\ inode.blocks = {}
-\*                /\ i \notin {dir[n] : n \in DOMAIN dir}
+NULL == 0 \* A special value representing a null or invalid block/inode.
 
 (*--algorithm FSModel {
-variables freeBlocks = Blocks \ {1},
-          inodes = [i \in InodeIds |-> 
-                      IF i = 0 THEN 
-                          [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}]
-                      ELSE 
-                          [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]],
-          dir = [n \in {} |-> 0];
+\* File System Model Algorithm: Simulates basic file system operations.
+
+variables 
+    \* freeBlocks: A set of data blocks that are currently available for allocation.
+    freeBlocks = Blocks \ {1}, \* Initialize freeBlocks to all blocks except block 1 (reserved, e.g., for superblock).
+    \* inodes: A mapping from InodeId to a record representing an inode.
+    \* Each inode record has fields:
+    \* - valid: BOOLEAN (TRUE if the inode is in use, FALSE otherwise)
+    \* - isDir: BOOLEAN (TRUE if the inode represents a directory, FALSE for a regular file)
+    \* - size: NATURAL (The logical size of the file/directory in abstract units)
+    \* - blocks: Set(Blocks) (The set of data blocks allocated to this inode)
+    inodes = [i \in InodeIds |->
+                      IF i = 0 THEN
+                          [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] \* Inode 0 is the root directory, initially valid and empty.
+                      ELSE
+                          [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]], \* All other inodes are initially invalid/free.
+    \* dir: A mapping from file/directory name (STRING) to its InodeId.
+    dir = [n \in {} |-> 0]; \* Initialize directory as empty (no entries).
 
 define {
-    MaxBlocksPerFile == 2
+    MaxBlocksPerFile == 2 \* Defines the maximum number of data blocks a single file can use.
 }
 
+
 {
+    \* The main loop of the file system model, continuously performing operations.
     while (TRUE) {
+        \* Non-deterministically choose an operation to perform.
         with (op \in {"CreateFile", "WriteFile", "ReadFile", "DeleteFile"}) {
             if (op = "CreateFile") {
+                \* Non-deterministically choose a file name.
                 with (name \in STRING) {
-                    if (\E i \in InodeIds: ~inodes[i].valid /\ name \notin DOMAIN dir) {
-                        with (i \in InodeIds: ~inodes[i].valid) {
-                            inodes[i] := [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}];
-                            dir[name] := i;
-                        }
+                    \* Check if a free inode exists AND the chosen name is not already in use.
+                    \* If both conditions are met, non-deterministically pick such an inode 'i'.
+                    with (i \in InodeIds : ~inodes[i].valid /\ name \notin DOMAIN dir) {
+                        inodes[i] := [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}];
+                        dir[name] := i;
                     }
                 }
             }
             else if (op = "WriteFile") {
+                \* Non-deterministically choose an existing file name.
                 with (name \in DOMAIN dir) {
+                    \* Get the inode ID for the chosen name.
                     with (i = dir[name]) {
+                        \* Check if the inode is valid, not a directory, there are free blocks,
+                        \* and the file hasn't reached its maximum block limit.
                         if (inodes[i].valid /\ ~inodes[i].isDir /\ Cardinality(freeBlocks) > 0 /\ Cardinality(inodes[i].blocks) < MaxBlocksPerFile) {
-                            with (b \in freeBlocks) {
+                            with (b \in freeBlocks) { \* Non-deterministically pick a free block, and assign it to the inode
                                 freeBlocks := freeBlocks \ {b};
                                 inodes[i] := [inodes[i] EXCEPT !.blocks = @ \cup {b}, !.size = @ + 1];
                             }
@@ -66,8 +68,9 @@ define {
             else if (op = "ReadFile") {
                 with (name \in DOMAIN dir) {
                     with (i = dir[name]) {
+                        \* Non-deterministically choose a valid offset within the file's logical size.
                         with (offset \in 0..(inodes[i].size - 1)) {
-                            skip;
+                            skip; \* 'skip' means no state change occurs, just simulating the action.
                         }
                     }
                 }
@@ -75,9 +78,9 @@ define {
             else if (op = "DeleteFile") {
                 with (name \in DOMAIN dir) {
                     with (i = dir[name]) {
-                        freeBlocks := freeBlocks \cup inodes[i].blocks;
-                        inodes[i] := [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}];
-                        dir := [dir EXCEPT ![name] = NULL]; \* remove entry
+                        freeBlocks := freeBlocks \cup inodes[i].blocks; \* Return all blocks associated with the inode to freeBlocks.
+                        inodes[i] := [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]; \* Invalidate the inode and reset its fields.
+                        dir := [dir EXCEPT ![name] = NULL]; \* Remove the file's entry from the directory
                     }
                 }
             }
@@ -86,7 +89,7 @@ define {
 }
 }
 *)
-\* BEGIN TRANSLATION (chksum(pcal) = "ffdc07d7" /\ chksum(tla) = "cc3b2b04")
+\* BEGIN TRANSLATION (chksum(pcal) = "72184192" /\ chksum(tla) = "57c58dd5")
 VARIABLES freeBlocks, inodes, dir
 
 (* define statement *)
@@ -107,12 +110,9 @@ Init == (* Global variables *)
 Next == \E op \in {"CreateFile", "WriteFile", "ReadFile", "DeleteFile"}:
           IF op = "CreateFile"
              THEN /\ \E name \in STRING:
-                       IF \E i \in InodeIds: ~inodes[i].valid /\ name \notin DOMAIN dir
-                          THEN /\ \E i \in InodeIds:
-                                    /\ inodes' = [inodes EXCEPT ![i] = [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}]]
-                                    /\ dir' = [dir EXCEPT ![name] = i]
-                          ELSE /\ TRUE
-                               /\ UNCHANGED << inodes, dir >>
+                       \E i \in InodeIds : ~inodes[i].valid /\ name \notin DOMAIN dir
+                         /\ inodes' = [inodes EXCEPT ![i] = [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}]]
+                         /\ dir' = [dir EXCEPT ![name] = i]
                   /\ UNCHANGED freeBlocks
              ELSE /\ IF op = "WriteFile"
                         THEN /\ \E name \in DOMAIN dir:
@@ -149,5 +149,5 @@ Spec == Init /\ [][Next]_vars
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 04 21:54:47 IDT 2025 by eitam
+\* Last modified Wed Jun 04 22:19:19 IDT 2025 by eitam
 \* Created Wed Jun 04 20:59:19 IDT 2025 by eitam
