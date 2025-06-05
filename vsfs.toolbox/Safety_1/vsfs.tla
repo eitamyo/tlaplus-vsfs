@@ -5,7 +5,7 @@ EXTENDS Naturals, Sequences, FiniteSets
 CONSTANTS 
     Blocks,     \* e.g., {1,2,3,4,5,6,7,8} - The set of all data blocks in the file system.
     InodeIds,   \* e.g., 0..N-1 - The set of all possible inode identifiers.
-    FileNames   \* e.g., {"file1", "file2", "dir1"} - The set of all possible file names.
+    FileNames   \*
 
 ASSUME FileNames \subseteq STRING /\ FileNames # {}
 NULL == 0 \* A special value representing a null or invalid block/inode.

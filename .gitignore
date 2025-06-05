@@ -1,0 +1,5 @@
+# Ignore TLC model checker output files
+vsfs.toolbox/*_Snapshot_*
+vsfs.toolbox/*.launch
+vsfs.toolbox/**/*.st
+vsfs.toolbox/**/*.fp
