@@ -169,7 +169,7 @@ NoDoubleAllocation ==
 AllDirEntriesPointToValidInodes ==
   \A name \in DOMAIN dir:
     LET i == dir[name] IN inodes[i].valid = TRUE
-
+    
 \* Block is used iff it is allocated to an inode
 AllUsedBlocksAreAllocated ==
   /\ \A i \in DOMAIN inodes:
@@ -179,11 +179,18 @@ AllUsedBlocksAreAllocated ==
        \A i \in DOMAIN inodes:
          inodes[i].valid =>
            b \notin inodes[i].blocks
+
+\* No free inode is referenced by a directory entry or has allocated blocks
+FreeInodesAreUnreferencedAndBlockless ==
+  \A i \in DOMAIN inodes:
+    ~inodes[i].valid =>
+      /\ \A name \in DOMAIN dir: dir[name] # i
+      /\ inodes[i].blocks = {}
       
 THEOREM Spec => []NoDoubleAllocation
 
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 05 23:31:55 IDT 2025 by eitam
+\* Last modified Thu Jun 05 23:38:16 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam
