@@ -168,11 +168,20 @@ NoDoubleAllocation ==
 AllDirEntriesPointToValidInodes ==
   \A name \in DOMAIN dir:
     LET i == dir[name] IN inodes[i].valid = TRUE
+    
+AllUsedBlocksAreAllocated ==
+  /\ \A i \in DOMAIN inodes:
+       inodes[i].valid =>
+         \A b \in inodes[i].blocks: b \notin freeBlocks
+  /\ \A b \in freeBlocks:
+       \A i \in DOMAIN inodes:
+         inodes[i].valid =>
+           b \notin inodes[i].blocks
       
 THEOREM Spec => []NoDoubleAllocation
 
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 05 23:29:06 IDT 2025 by eitam
+\* Last modified Thu Jun 05 23:31:55 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam

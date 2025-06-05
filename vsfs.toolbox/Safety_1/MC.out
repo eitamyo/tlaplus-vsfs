@@ -2,7 +2,7 @@
 TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 24 and seed 7675447406094178665 with 4 workers on 8 cores with 1198MB heap and 2692MB offheap memory [pid: 4900] (Windows 10 10.0 amd64, AdoptOpenJDK 14.0.1 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 15 and seed -7093709530117685207 with 4 workers on 8 cores with 1198MB heap and 2692MB offheap memory [pid: 1308] (Windows 10 10.0 amd64, AdoptOpenJDK 14.0.1 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -24,13 +24,13 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2025-06-05 23:29:09)
+Starting... (2025-06-05 23:32:16)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2189:0 @!@!@
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 1 distinct state generated at 2025-06-05 23:29:10.
+Finished computing initial states: 1 distinct state generated at 2025-06-05 23:32:16.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2193:0 @!@!@
 Model checking completed. No error has been found.
@@ -39,7 +39,7 @@ Model checking completed. No error has been found.
   calculated (optimistic):  val = 2.5E-12
 @!@!@ENDMSG 2193 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2025-06-05 23:29:10
+The coverage statistics at 2025-06-05 23:32:17
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
 <Init line 109, col 1 to line 109, col 4 of module vsfs>: 1:1
@@ -141,35 +141,68 @@ The coverage statistics at 2025-06-05 23:29:10
   line 150, col 55 to line 152, col 73 of module vsfs: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2774:0 @!@!@
-<AllDirEntriesPointToValidInodes line 168, col 1 to line 168, col 31 of module vsfs>
+<AllUsedBlocksAreAllocated line 172, col 1 to line 172, col 25 of module vsfs>
 @!@!@ENDMSG 2774 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 169, col 3 to line 170, col 48 of module vsfs: 2449
+  line 173, col 3 to line 179, col 36 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 170, col 14 to line 170, col 22 of module vsfs: 6276
+  |line 173, col 6 to line 175, col 55 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 170, col 27 to line 170, col 48 of module vsfs: 6276
+  ||line 174, col 8 to line 175, col 55 of module vsfs: 9796
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 15 to line 169, col 24 of module vsfs: 2449
+  |||line 174, col 8 to line 174, col 22 of module vsfs: 9796
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 175, col 10 to line 175, col 55 of module vsfs: 8725
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 175, col 37 to line 175, col 55 of module vsfs: 5076
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 175, col 19 to line 175, col 34 of module vsfs: 8725
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 173, col 15 to line 173, col 27 of module vsfs: 2449
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 176, col 6 to line 179, col 36 of module vsfs: 2449
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 177, col 8 to line 179, col 36 of module vsfs: 2271
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 178, col 10 to line 179, col 36 of module vsfs: 9084
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 178, col 10 to line 178, col 24 of module vsfs: 9084
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 179, col 12 to line 179, col 36 of module vsfs: 7815
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 177, col 17 to line 177, col 29 of module vsfs: 2271
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 176, col 15 to line 176, col 24 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2202:0 @!@!@
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(7) at 2025-06-05 23:29:10: 21,373 states generated (889,923 s/min), 2,449 distinct states found (101,970 ds/min), 0 states left on queue.
+Progress(9) at 2025-06-05 23:32:17: 21,373 states generated (839,803 s/min), 2,449 distinct states found (96,227 ds/min), 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
 21373 states generated, 2449 distinct states found, 0 states left on queue.
 @!@!@ENDMSG 2199 @!@!@
 @!@!@STARTMSG 2194:0 @!@!@
-The depth of the complete state graph search is 7.
+The depth of the complete state graph search is 9.
 @!@!@ENDMSG 2194 @!@!@
 @!@!@STARTMSG 2268:0 @!@!@
 The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 12 and the 95th percentile is 4).
 @!@!@ENDMSG 2268 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 1450ms at (2025-06-05 23:29:10)
+Finished in 1537ms at (2025-06-05 23:32:17)
 @!@!@ENDMSG 2186 @!@!@
