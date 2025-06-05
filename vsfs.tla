@@ -165,10 +165,12 @@ NoDoubleAllocation ==
     \A j \in DOMAIN inodes:
       (i # j) => (inodes[i].blocks \cap inodes[j].blocks = {})
 
+\* All directory entries point to valid inodes
 AllDirEntriesPointToValidInodes ==
   \A name \in DOMAIN dir:
     LET i == dir[name] IN inodes[i].valid = TRUE
-    
+
+\* Block is used iff it is allocated to an inode
 AllUsedBlocksAreAllocated ==
   /\ \A i \in DOMAIN inodes:
        inodes[i].valid =>
