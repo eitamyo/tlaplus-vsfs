@@ -149,6 +149,19 @@ Spec == Init /\ [][Next]_vars
 
 \* END TRANSLATION 
 
+\* TLC Invariants
+
+\* Safety properties
+
+\* No two inodes point to the same block
+NoDoubleAllocation ==
+  \A i \in DOMAIN inodes:
+    \A j \in DOMAIN inodes:
+      (i # j) => (inodes[i].blocks \cap inodes[j].blocks = {})
+      
+THEOREM Spec => []NoDoubleAllocation
+
+
 =============================================================================
 \* Modification History
 \* Last modified Thu Jun 05 22:37:19 IDT 2025 by eitam
