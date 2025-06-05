@@ -47,7 +47,7 @@ define {
                     \* If both conditions are met, non-deterministically pick such an inode 'i'.
                     with (i \in InodeIds : ~inodes[i].valid /\ name \notin DOMAIN dir) {
                         inodes[i] := [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}];\* Mark inode as valid, not a directory, size 0, no blocks.
-                        dir[name] := i;\* Add an entry to the directory mapping the name to the new inode.
+                        dir := [d \in DOMAIN dir \cup {name} |-> IF d = name THEN i ELSE dir[d]];\* Add an entry to the directory mapping the name to the new inode.
                     }
                 }
             }
@@ -94,10 +94,9 @@ define {
 }
 *)
 
-\* Replacements:
-\* /\ dir' = [dir EXCEPT ![name] = i] -> /\ dir' = [d \in DOMAIN dir \cup {name} |-> IF d = name THEN i ELSE dir[d]]
+\* Manual translation fixes: Remove extra ':'
 
-\* BEGIN TRANSLATION (chksum(pcal) = "8ca41071" /\ chksum(tla) \in STRING)
+\* BEGIN TRANSLATION (chksum(pcal) = "591eba79" /\ chksum(tla) \in STRING)
 VARIABLES freeBlocks, inodes, dir
 
 (* define statement *)
@@ -192,5 +191,5 @@ THEOREM Spec => []NoDoubleAllocation
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 05 23:38:16 IDT 2025 by eitam
+\* Last modified Thu Jun 05 23:49:01 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam
