@@ -1,14 +1,13 @@
 ---------------------------- MODULE vsfs ----------------------------
 
-EXTENDS Naturals, Sequences, FiniteSets
+EXTENDS Naturals, Sequences, FiniteSets, TLC
 
 CONSTANTS 
     Blocks,     \* e.g., {1,2,3,4,5,6,7,8} - The set of all data blocks in the file system.
     InodeIds,   \* e.g., 0..N-1 - The set of all possible inode identifiers.
-    FileNames   \*
+    FileNames   \* e.g., {"file1", "file2", "dir1"} - The set of all possible file names.
 
 ASSUME FileNames \subseteq STRING /\ FileNames # {}
-NULL == 0 \* A special value representing a null or invalid block/inode.
 
 (*--algorithm FSModel {
 \* File System Model Algorithm: Simulates basic file system operations.
@@ -40,6 +39,7 @@ define {
     while (TRUE) {
         \* Non-deterministically choose an operation to perform.
         with (op \in {"CreateFile", "WriteFile", "ReadFile", "DeleteFile"}) {
+\*            print <<"start", op>>;
             if (op = "CreateFile") {
                 \* Non-deterministically choose a file name.
                 with (name \in FileNames) {
@@ -81,17 +81,23 @@ define {
                 with (name \in DOMAIN dir) {
                     with (i = dir[name]) {
                         freeBlocks := freeBlocks \cup inodes[i].blocks; \* Return all blocks associated with the inode to freeBlocks.
+                        dir := [d \in DOMAIN dir \ {name} |-> dir[d]]; \* Remove the file's entry from the directory
                         inodes[i] := [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]; \* Invalidate the inode and reset its fields.
-                        dir := [dir EXCEPT ![name] = NULL]; \* Remove the file's entry from the directory
                     }
                 }
-            }
+            };
+            
+\*            print <<"end", op>>;
         }
     }
 }
 }
 *)
-\* BEGIN TRANSLATION (chksum(pcal) = "60fa17c2" /\ chksum(tla) \in STRING)
+
+\* Replacements:
+\* /\ dir' = [dir EXCEPT ![name] = i] -> /\ dir' = [d \in DOMAIN dir \cup {name} |-> IF d = name THEN i ELSE dir[d]]
+
+\* BEGIN TRANSLATION (chksum(pcal) = "8ca41071" /\ chksum(tla) \in STRING)
 VARIABLES freeBlocks, inodes, dir
 
 (* define statement *)
@@ -138,8 +144,8 @@ Next == \E op \in {"CreateFile", "WriteFile", "ReadFile", "DeleteFile"}:
                                               THEN /\ \E name \in DOMAIN dir:
                                                         LET i == dir[name] IN
                                                           /\ freeBlocks' = (freeBlocks \cup inodes[i].blocks)
+                                                          /\ dir' = [d \in DOMAIN dir \ {name} |-> dir[d]]
                                                           /\ inodes' = [inodes EXCEPT ![i] = [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]]
-                                                          /\ dir' = [dir EXCEPT ![name] = NULL]
                                               ELSE /\ TRUE
                                                    /\ UNCHANGED << freeBlocks, 
                                                                    inodes, 
@@ -158,11 +164,15 @@ NoDoubleAllocation ==
   \A i \in DOMAIN inodes:
     \A j \in DOMAIN inodes:
       (i # j) => (inodes[i].blocks \cap inodes[j].blocks = {})
+
+AllDirEntriesPointToValidInodes ==
+  \A name \in DOMAIN dir:
+    LET i == dir[name] IN inodes[i].valid = TRUE
       
 THEOREM Spec => []NoDoubleAllocation
 
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 05 22:37:19 IDT 2025 by eitam
+\* Last modified Thu Jun 05 23:29:06 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam

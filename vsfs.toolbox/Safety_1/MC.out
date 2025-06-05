@@ -2,7 +2,7 @@
 TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 18 and seed -3019891426261011685 with 4 workers on 8 cores with 1198MB heap and 2692MB offheap memory [pid: 4480] (Windows 10 10.0 amd64, AdoptOpenJDK 14.0.1 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 24 and seed 7675447406094178665 with 4 workers on 8 cores with 1198MB heap and 2692MB offheap memory [pid: 4900] (Windows 10 10.0 amd64, AdoptOpenJDK 14.0.1 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -17,181 +17,159 @@ Parsing file C:\Program Files\TLAToolbox-1.7.4\toolbox\plugins\org.lamport.tlato
 Semantic processing of module Naturals
 Semantic processing of module Sequences
 Semantic processing of module FiniteSets
-Semantic processing of module vsfs
 Semantic processing of module TLC
+Semantic processing of module vsfs
 Semantic processing of module MC
 @!@!@STARTMSG 2219:0 @!@!@
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2025-06-05 22:38:27)
+Starting... (2025-06-05 23:29:09)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2189:0 @!@!@
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 1 distinct state generated at 2025-06-05 22:38:27.
+Finished computing initial states: 1 distinct state generated at 2025-06-05 23:29:10.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2193:0 @!@!@
 Model checking completed. No error has been found.
   Estimates of the probability that TLC did not check all reachable states
   because two distinct states had the same fingerprint:
-  calculated (optimistic):  val = 1.2E-10
-  based on the actual fingerprints:  val = 9.7E-11
+  calculated (optimistic):  val = 2.5E-12
 @!@!@ENDMSG 2193 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2025-06-05 22:38:32
+The coverage statistics at 2025-06-05 23:29:10
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
-<Init line 103, col 1 to line 103, col 4 of module vsfs>: 1:1
+<Init line 109, col 1 to line 109, col 4 of module vsfs>: 1:1
 @!@!@ENDMSG 2773 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 104, col 9 to line 110, col 33 of module vsfs: 1
+  line 110, col 9 to line 116, col 33 of module vsfs: 1
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<Next line 112, col 1 to line 112, col 4 of module vsfs (113 11 146 73)>: 15455:162268
+<Next line 118, col 1 to line 118, col 4 of module vsfs (119 11 152 73)>: 2448:21372
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 113, col 14 to line 113, col 30 of module vsfs: 61824
+  line 119, col 14 to line 119, col 30 of module vsfs: 9796
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 115, col 44 to line 115, col 59 of module vsfs: 261124
+  line 121, col 44 to line 121, col 59 of module vsfs: 41500
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 115, col 45 to line 115, col 59 of module vsfs: 247296
+  |line 121, col 45 to line 121, col 59 of module vsfs: 39184
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 115, col 64 to line 115, col 85 of module vsfs: 87856
+  line 121, col 64 to line 121, col 85 of module vsfs: 6600
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 115, col 64 to line 115, col 67 of module vsfs: 74028
+  |line 121, col 64 to line 121, col 67 of module vsfs: 4284
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 115, col 76 to line 115, col 85 of module vsfs: 74028
+  |line 121, col 76 to line 121, col 85 of module vsfs: 4284
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 116, col 29 to line 116, col 138 of module vsfs: 13828
+  line 122, col 29 to line 122, col 138 of module vsfs: 2316
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 117, col 29 to line 117, col 100 of module vsfs: 13828
+  line 123, col 29 to line 123, col 100 of module vsfs: 2316
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 115, col 33 to line 115, col 40 of module vsfs: 61824
+  line 121, col 33 to line 121, col 40 of module vsfs: 9796
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 114, col 34 to line 114, col 42 of module vsfs: 15456
+  line 120, col 34 to line 120, col 42 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 118, col 22 to line 118, col 41 of module vsfs: 13828
+  line 124, col 22 to line 124, col 41 of module vsfs: 2316
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 119, col 25 to line 119, col 40 of module vsfs: 46368
+  line 125, col 25 to line 125, col 40 of module vsfs: 7347
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 122, col 40 to line 122, col 157 of module vsfs: 52124
+  line 128, col 40 to line 128, col 157 of module vsfs: 6276
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 122, col 40 to line 122, col 105 of module vsfs: 52124
+  |line 128, col 40 to line 128, col 105 of module vsfs: 6276
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 122, col 40 to line 122, col 74 of module vsfs: 52124
+  |line 128, col 110 to line 128, col 157 of module vsfs: 4116
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 122, col 40 to line 122, col 54 of module vsfs: 52124
+  line 130, col 50 to line 131, col 141 of module vsfs: 5076
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 122, col 59 to line 122, col 74 of module vsfs: 46020
+  line 129, col 57 to line 129, col 66 of module vsfs: 3648
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 122, col 79 to line 122, col 105 of module vsfs: 39916
+  line 132, col 48 to line 132, col 51 of module vsfs: 2628
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 122, col 110 to line 122, col 157 of module vsfs: 27316
+  line 133, col 48 to line 134, col 69 of module vsfs: 2628
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 124, col 50 to line 125, col 141 of module vsfs: 33912
+  line 126, col 45 to line 126, col 54 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 123, col 57 to line 123, col 66 of module vsfs: 23632
+  line 135, col 33 to line 135, col 42 of module vsfs: 7704
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 126, col 48 to line 126, col 51 of module vsfs: 28492
+  line 136, col 36 to line 136, col 50 of module vsfs: 4898
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 127, col 48 to line 128, col 69 of module vsfs: 28492
+  line 140, col 50 to line 140, col 53 of module vsfs: 5076
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 120, col 45 to line 120, col 54 of module vsfs: 15456
+  line 139, col 62 to line 139, col 84 of module vsfs: 6276
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 129, col 33 to line 129, col 42 of module vsfs: 62404
+  line 137, col 56 to line 137, col 65 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 130, col 36 to line 130, col 50 of module vsfs: 30912
+  line 141, col 44 to line 142, col 62 of module vsfs: 5076
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 134, col 50 to line 134, col 53 of module vsfs: 33912
+  line 143, col 47 to line 143, col 63 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 133, col 62 to line 133, col 84 of module vsfs: 52124
+  line 146, col 59 to line 148, col 155 of module vsfs: 6276
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 131, col 56 to line 131, col 65 of module vsfs: 15456
+  line 144, col 67 to line 144, col 76 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 135, col 44 to line 136, col 62 of module vsfs: 33912
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 137, col 47 to line 137, col 63 of module vsfs: 15456
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 140, col 59 to line 142, col 95 of module vsfs: 52124
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 138, col 67 to line 138, col 76 of module vsfs: 15456
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 144, col 55 to line 146, col 73 of module vsfs: 0
+  line 150, col 55 to line 152, col 73 of module vsfs: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2774:0 @!@!@
-<NoDoubleAllocation line 157, col 1 to line 157, col 18 of module vsfs>
+<AllDirEntriesPointToValidInodes line 168, col 1 to line 168, col 31 of module vsfs>
 @!@!@ENDMSG 2774 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 158, col 3 to line 160, col 62 of module vsfs: 15456
+  line 169, col 3 to line 170, col 48 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 159, col 5 to line 160, col 62 of module vsfs: 61824
+  |line 170, col 14 to line 170, col 22 of module vsfs: 6276
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 160, col 7 to line 160, col 62 of module vsfs: 247296
+  |line 170, col 27 to line 170, col 48 of module vsfs: 6276
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 160, col 8 to line 160, col 12 of module vsfs: 247296
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |||line 160, col 19 to line 160, col 61 of module vsfs: 185472
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  ||line 159, col 14 to line 159, col 26 of module vsfs: 61824
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 158, col 12 to line 158, col 24 of module vsfs: 15456
+  |line 169, col 15 to line 169, col 24 of module vsfs: 2449
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2202:0 @!@!@
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(11) at 2025-06-05 22:38:32: 162,269 states generated (1,674,890 s/min), 15,456 distinct states found (159,532 ds/min), 0 states left on queue.
+Progress(7) at 2025-06-05 23:29:10: 21,373 states generated (889,923 s/min), 2,449 distinct states found (101,970 ds/min), 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
-162269 states generated, 15456 distinct states found, 0 states left on queue.
+21373 states generated, 2449 distinct states found, 0 states left on queue.
 @!@!@ENDMSG 2199 @!@!@
 @!@!@STARTMSG 2194:0 @!@!@
-The depth of the complete state graph search is 11.
+The depth of the complete state graph search is 7.
 @!@!@ENDMSG 2194 @!@!@
 @!@!@STARTMSG 2268:0 @!@!@
-The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 12 and the 95th percentile is 3).
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 12 and the 95th percentile is 4).
 @!@!@ENDMSG 2268 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 5824ms at (2025-06-05 22:38:32)
+Finished in 1450ms at (2025-06-05 23:29:10)
 @!@!@ENDMSG 2186 @!@!@
