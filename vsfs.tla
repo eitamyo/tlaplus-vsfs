@@ -4,8 +4,10 @@ EXTENDS Naturals, Sequences, FiniteSets
 
 CONSTANTS 
     Blocks,     \* e.g., {1,2,3,4,5,6,7,8} - The set of all data blocks in the file system.
-    InodeIds    \* e.g., 0..N-1 - The set of all possible inode identifiers.
+    InodeIds,   \* e.g., 0..N-1 - The set of all possible inode identifiers.
+    FileNames   \* e.g., {"file1", "file2", "dir1"} - The set of all possible file names.
 
+ASSUME FileNames \subseteq STRING /\ FileNames # {}
 NULL == 0 \* A special value representing a null or invalid block/inode.
 
 (*--algorithm FSModel {
@@ -40,12 +42,12 @@ define {
         with (op \in {"CreateFile", "WriteFile", "ReadFile", "DeleteFile"}) {
             if (op = "CreateFile") {
                 \* Non-deterministically choose a file name.
-                with (name \in STRING) {
+                with (name \in FileNames) {
                     \* Check if a free inode exists AND the chosen name is not already in use.
                     \* If both conditions are met, non-deterministically pick such an inode 'i'.
                     with (i \in InodeIds : ~inodes[i].valid /\ name \notin DOMAIN dir) {
-                        inodes[i] := [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}];
-                        dir[name] := i;
+                        inodes[i] := [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}];\* Mark inode as valid, not a directory, size 0, no blocks.
+                        dir[name] := i;\* Add an entry to the directory mapping the name to the new inode.
                     }
                 }
             }
@@ -89,7 +91,7 @@ define {
 }
 }
 *)
-\* BEGIN TRANSLATION (chksum(pcal) = "72184192" /\ chksum(tla) = "57c58dd5")
+\* BEGIN TRANSLATION (chksum(pcal) = "60fa17c2" /\ chksum(tla) \in STRING)
 VARIABLES freeBlocks, inodes, dir
 
 (* define statement *)
@@ -109,10 +111,10 @@ Init == (* Global variables *)
 
 Next == \E op \in {"CreateFile", "WriteFile", "ReadFile", "DeleteFile"}:
           IF op = "CreateFile"
-             THEN /\ \E name \in STRING:
+             THEN /\ \E name \in FileNames:
                        \E i \in InodeIds : ~inodes[i].valid /\ name \notin DOMAIN dir
                          /\ inodes' = [inodes EXCEPT ![i] = [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}]]
-                         /\ dir' = [dir EXCEPT ![name] = i]
+                         /\ dir' = [d \in DOMAIN dir \cup {name} |-> IF d = name THEN i ELSE dir[d]]
                   /\ UNCHANGED freeBlocks
              ELSE /\ IF op = "WriteFile"
                         THEN /\ \E name \in DOMAIN dir:
@@ -149,5 +151,5 @@ Spec == Init /\ [][Next]_vars
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 04 22:19:19 IDT 2025 by eitam
-\* Created Wed Jun 04 20:59:19 IDT 2025 by eitam
+\* Last modified Thu Jun 05 22:37:19 IDT 2025 by eitam
+\* Created Thu Jun 05 20:42:58 IDT 2025 by eitam
