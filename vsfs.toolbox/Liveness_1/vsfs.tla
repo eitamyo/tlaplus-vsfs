@@ -28,10 +28,6 @@ variables
                             [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]], \* All other inodes are initially invalid/free.
     \* dir: A mapping from file/directory name (STRING) to its InodeId.
     dir = [n \in {} |-> 0]; \* Initialize directory as empty (no entries).
-    \* Aux variable for multi-step DeleteFile operation
-    curFileName = "None";
-    curINode = 0;
-    delete_stage = "idle"; \* "idle", "free_blocks", "invalidate_inode", "remove_dir_entry"
 
 define {
     MaxBlocksPerFile == 2 \* Defines the maximum number of data blocks a single file can use.
@@ -48,10 +44,10 @@ Main:
         either {
 \*CreateFileOp:
             \* Non-deterministically choose a file name.
-            with (name \in FileNames \ {curFileName}) {
+            with (name \in FileNames) {
                 \* Check if a free inode exists AND the chosen name is not already in use.
                 \* If both conditions are met, non-deterministically pick such an inode 'i'.
-                with (i \in InodeIds \ {curINode} : ~inodes[i].valid /\ name \notin DOMAIN dir) {
+                with (i \in InodeIds : ~inodes[i].valid /\ name \notin DOMAIN dir) {
                     inodes[i] := [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}];\* Mark inode as valid, not a directory, size 0, no blocks.
                     dir := [d \in DOMAIN dir \cup {name} |-> IF d = name THEN i ELSE dir[d]];\* Add an entry to the directory mapping the name to the new inode.
                 }
@@ -61,7 +57,7 @@ Main:
         or {
 \*WriteFileOp:
             \* Non-deterministically choose an existing file name.
-            with (name \in DOMAIN dir \ {curFileName}) {
+            with (name \in DOMAIN dir) {
                 \* Get the inode ID for the chosen name.
                 with (i = dir[name]) {
                     \* Check if the inode is valid, not a directory, there are free blocks,
@@ -78,7 +74,7 @@ Main:
 \*            else if (op = "ReadFile") {
         or {
 \*ReadFileOp:
-            with (name \in DOMAIN dir \ {curFileName}) {
+            with (name \in DOMAIN dir) {
                 with (i = dir[name]) {
                     \* Non-deterministically choose a valid offset within the file's logical size.
                     with (offset \in 0..(inodes[i].size - 1)) {
@@ -91,33 +87,13 @@ Main:
         or {
         
 \*DeleteFileOp:
-            if (delete_stage = "idle") {
                 with (name \in DOMAIN dir) {
-                    curFileName := name;
-                    delete_stage := "remove_dir_entry";
-\*                        freeBlocks := freeBlocks \cup inodes[i].blocks; \* Return all blocks associated with the inode to freeBlocks.
-\*                        {
-\*                        }
-\*                        {
-\*                        inodes[i] := [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]; \* Invalidate the inode and reset its fields.
-\*                        dir := [d \in DOMAIN dir \ {name} |-> dir[d]]; \* Remove the file's entry from the directory
-\*                        }
+                    with (i = dir[name]) {
+                        freeBlocks := freeBlocks \cup inodes[i].blocks; \* Return all blocks associated with the inode to freeBlocks.
+                        dir := [d \in DOMAIN dir \ {name} |-> dir[d]]; \* Remove the file's entry from the directory
+                        inodes[i] := [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]; \* Invalidate the inode and reset its fields.
+                    }
                 }
-             } else if (delete_stage = "remove_dir_entry") {
-                with (i = dir[curFileName]) {
-                    curINode := i;
-                    dir := [d \in DOMAIN dir \ {curFileName} |-> dir[d]];
-                    delete_stage := "invalidate_inode"; \* Reset for the next deletion
-                }
-             } else if (delete_stage = "invalidate_inode") {
-                inodes[curINode] := [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}];
-                delete_stage := "free_blocks";
-             } else if (delete_stage = "free_blocks") {
-                freeBlocks := freeBlocks \cup inodes[curINode].blocks;
-                delete_stage := "idle";
-                curFileName := "None";
-                curINode := 0;
-             }
 \*            };
         }
             
@@ -130,14 +106,14 @@ Main:
 
 \* Manual translation fixes: Remove extra ':'
 
-\* BEGIN TRANSLATION (chksum(pcal) = "2525d14d" /\ chksum(tla) \in STRING)
-VARIABLES freeBlocks, inodes, dir, curFileName, curINode, delete_stage
+\* BEGIN TRANSLATION (chksum(pcal) = "f4b0054e" /\ chksum(tla) \in STRING)
+VARIABLES freeBlocks, inodes, dir
 
 (* define statement *)
 MaxBlocksPerFile == 2
 
 
-vars == << freeBlocks, inodes, dir, curFileName, curINode, delete_stage >>
+vars == << freeBlocks, inodes, dir >>
 
 Init == (* Global variables *)
         /\ freeBlocks = Blocks \ {1}
@@ -147,16 +123,13 @@ Init == (* Global variables *)
                            ELSE
                                    [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]]
         /\ dir = [n \in {} |-> 0]
-        /\ curFileName = "None"
-        /\ curINode = 0
-        /\ delete_stage = "idle"
 
-Next == \/ /\ \E name \in FileNames \ {curFileName}:
-                \E i \in InodeIds \ {curINode} : ~inodes[i].valid /\ name \notin DOMAIN dir
+Next == \/ /\ \E name \in FileNames:
+                \E i \in InodeIds : ~inodes[i].valid /\ name \notin DOMAIN dir
                   /\ inodes' = [inodes EXCEPT ![i] = [inodes[i] EXCEPT !.valid = TRUE, !.isDir = FALSE, !.size = 0, !.blocks = {}]]
                   /\ dir' = [d \in DOMAIN dir \cup {name} |-> IF d = name THEN i ELSE dir[d]]
-           /\ UNCHANGED <<freeBlocks, curFileName, curINode, delete_stage>>
-        \/ /\ \E name \in DOMAIN dir \ {curFileName}:
+           /\ UNCHANGED freeBlocks
+        \/ /\ \E name \in DOMAIN dir:
                 LET i == dir[name] IN
                   IF inodes[i].valid /\ ~inodes[i].isDir /\ Cardinality(freeBlocks) > 0 /\ Cardinality(inodes[i].blocks) < MaxBlocksPerFile
                      THEN /\ \E b \in freeBlocks:
@@ -164,42 +137,17 @@ Next == \/ /\ \E name \in FileNames \ {curFileName}:
                                /\ inodes' = [inodes EXCEPT ![i] = [inodes[i] EXCEPT !.blocks = @ \cup {b}, !.size = @ + 1]]
                      ELSE /\ TRUE
                           /\ UNCHANGED << freeBlocks, inodes >>
-           /\ UNCHANGED <<dir, curFileName, curINode, delete_stage>>
-        \/ /\ \E name \in DOMAIN dir \ {curFileName}:
+           /\ dir' = dir
+        \/ /\ \E name \in DOMAIN dir:
                 LET i == dir[name] IN
                   \E offset \in 0..(inodes[i].size - 1):
                     TRUE
-           /\ UNCHANGED <<freeBlocks, inodes, dir, curFileName, curINode, delete_stage>>
-        \/ /\ IF delete_stage = "idle"
-                 THEN /\ \E name \in DOMAIN dir:
-                           /\ curFileName' = name
-                           /\ delete_stage' = "remove_dir_entry"
-                      /\ UNCHANGED << freeBlocks, inodes, dir, curINode >>
-                 ELSE /\ IF delete_stage = "remove_dir_entry"
-                            THEN /\ LET i == dir[curFileName] IN
-                                      /\ curINode' = i
-                                      /\ dir' = [d \in DOMAIN dir \ {curFileName} |-> dir[d]]
-                                      /\ delete_stage' = "invalidate_inode"
-                                 /\ UNCHANGED << freeBlocks, inodes, 
-                                                 curFileName >>
-                            ELSE /\ IF delete_stage = "invalidate_inode"
-                                       THEN /\ inodes' = [inodes EXCEPT ![curINode] = [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]]
-                                            /\ delete_stage' = "free_blocks"
-                                            /\ UNCHANGED << freeBlocks, 
-                                                            curFileName, 
-                                                            curINode >>
-                                       ELSE /\ IF delete_stage = "free_blocks"
-                                                  THEN /\ freeBlocks' = (freeBlocks \cup inodes[curINode].blocks)
-                                                       /\ delete_stage' = "idle"
-                                                       /\ curFileName' = "None"
-                                                       /\ curINode' = 0
-                                                  ELSE /\ TRUE
-                                                       /\ UNCHANGED << freeBlocks, 
-                                                                       curFileName, 
-                                                                       curINode, 
-                                                                       delete_stage >>
-                                            /\ UNCHANGED inodes
-                                 /\ dir' = dir
+           /\ UNCHANGED <<freeBlocks, inodes, dir>>
+        \/ /\ \E name \in DOMAIN dir:
+                LET i == dir[name] IN
+                  /\ freeBlocks' = (freeBlocks \cup inodes[i].blocks)
+                  /\ dir' = [d \in DOMAIN dir \ {name} |-> dir[d]]
+                  /\ inodes' = [inodes EXCEPT ![i] = [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]]
 
 Spec == /\ Init /\ [][Next]_vars
         /\ WF_vars(Next)
@@ -245,9 +193,6 @@ FreeInodesAreUnreferencedAndBlockless ==
 
 AllFilesEventuallyCreated ==
   <> \A name \in FileNames : name \in DOMAIN dir
-
-AllFilesEventuallyDeleted ==
-  <> \A name \in FileNames : name \in DOMAIN dir
   
 SpecWithFairness == Spec 
     /\ AllFilesEventuallyCreated
@@ -265,5 +210,5 @@ FileDeletionLiveness ==
 
 =============================================================================
 \* Modification History
-\* Last modified Fri Jun 06 18:35:05 IDT 2025 by eitam
+\* Last modified Fri Jun 06 13:48:08 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam
