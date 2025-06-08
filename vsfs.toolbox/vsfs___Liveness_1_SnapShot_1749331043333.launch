@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.lamport.tla.toolbox.tool.tlc.modelCheck">
-    <stringAttribute key="configurationName" value="Liveness_1"/>
+    <stringAttribute key="configurationName" value="Liveness_1_SnapShot_1749331043333"/>
     <intAttribute key="distributedFPSetCount" value="0"/>
     <stringAttribute key="distributedNetworkInterface" value="172.16.98.64"/>
     <intAttribute key="distributedNodesCount" value="1"/>
@@ -11,11 +11,12 @@
     <stringAttribute key="modelBehaviorNext" value=""/>
     <stringAttribute key="modelBehaviorSpec" value="SpecWithFairness"/>
     <intAttribute key="modelBehaviorSpecType" value="1"/>
-    <stringAttribute key="modelBehaviorVars" value="curFileName, create_stage, write_stage, current_op, inodes, curBlock, delete_stage, freeBlocks, dir, curINode"/>
+    <stringAttribute key="modelBehaviorVars" value=""/>
     <stringAttribute key="modelComments" value=""/>
     <booleanAttribute key="modelCorrectnessCheckDeadlock" value="false"/>
     <listAttribute key="modelCorrectnessInvariants"/>
     <listAttribute key="modelCorrectnessProperties">
+        <listEntry value="0FileCreationLiveness"/>
         <listEntry value="1AlwaysGetsToIdle"/>
         <listEntry value="1FileCreationWorks"/>
     </listAttribute>

@@ -344,8 +344,6 @@ AllAllocatedBlocksAreUsed ==
          inodes[i].valid /\ b \in inodes[i].blocks
          
 SomeAllocatedBlockIsUnused == ~AllAllocatedBlocksAreUsed
-
-AllocatedBlocksAreUsedAlways == []AllAllocatedBlocksAreUsed
       
       
 DeleteisUnsafe ==
@@ -380,6 +378,6 @@ FileDeletionLiveness ==
 
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 08 00:20:57 IDT 2025 by omerzohar
+\* Last modified Sun Jun 08 00:17:09 IDT 2025 by omerzohar
 \* Last modified Fri Jun 06 18:35:58 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam

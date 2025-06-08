@@ -86,7 +86,7 @@ Main:
             }
         }
         else if (current_op = "write") {
-            if (write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {} \/ (\A name \in DOMAIN dir : LET i == dir[name] IN inodes[i].isDir \/ Cardinality(inodes[i].blocks) >= MaxBlocksPerFile))) {
+            if (write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {})){
                 current_op := "none";
             }
             else if (write_stage = "idle") {
@@ -115,7 +115,6 @@ Main:
                 curINode := 0;
                 curBlock := 0;
                 write_stage := "idle";
-                current_op := "none";
             }
         }
         else if (current_op = "delete") {
@@ -158,7 +157,7 @@ Main:
 
 \* Manual translation fixes: Remove extra ':'
 
-\* BEGIN TRANSLATION (chksum(pcal) = "d2b0cfa3" /\ chksum(tla) \in STRING)
+\* BEGIN TRANSLATION (chksum(pcal) = "a1abb0e8" /\ chksum(tla) \in STRING)
 VARIABLES freeBlocks, inodes, dir, curFileName, curINode, curBlock, 
           create_stage, write_stage, delete_stage, current_op, 
           curDeletedBlocks
@@ -227,7 +226,7 @@ Next == IF current_op = "none"
                                            write_stage, delete_stage, 
                                            curDeletedBlocks >>
                       ELSE /\ IF current_op = "write"
-                                 THEN /\ IF write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {} \/ (\A name \in DOMAIN dir : LET i == dir[name] IN inodes[i].isDir \/ Cardinality(inodes[i].blocks) >= MaxBlocksPerFile))
+                                 THEN /\ IF write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {})
                                             THEN /\ current_op' = "none"
                                                  /\ UNCHANGED << freeBlocks, 
                                                                  inodes, 
@@ -251,23 +250,21 @@ Next == IF current_op = "none"
                                                                                            curINode, 
                                                                                            curBlock, 
                                                                                            write_stage >>
-                                                            /\ UNCHANGED << inodes, 
-                                                                            current_op >>
+                                                            /\ UNCHANGED inodes
                                                        ELSE /\ IF write_stage = "block_taken"
                                                                   THEN /\ inodes' = [inodes EXCEPT ![curINode] = [inodes[curINode] EXCEPT !.blocks = @ \cup {curBlock}, !.size = @ + 1]]
                                                                        /\ curFileName' = "None"
                                                                        /\ curINode' = 0
                                                                        /\ curBlock' = 0
                                                                        /\ write_stage' = "idle"
-                                                                       /\ current_op' = "none"
                                                                   ELSE /\ TRUE
                                                                        /\ UNCHANGED << inodes, 
                                                                                        curFileName, 
                                                                                        curINode, 
                                                                                        curBlock, 
-                                                                                       write_stage, 
-                                                                                       current_op >>
+                                                                                       write_stage >>
                                                             /\ UNCHANGED freeBlocks
+                                                 /\ UNCHANGED current_op
                                       /\ UNCHANGED << dir, delete_stage, 
                                                       curDeletedBlocks >>
                                  ELSE /\ IF current_op = "delete"
@@ -418,6 +415,6 @@ FileDeletionLiveness ==
 
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 08 13:28:40 IDT 2025 by omerzohar
+\* Last modified Sun Jun 08 13:20:07 IDT 2025 by omerzohar
 \* Last modified Fri Jun 06 18:35:58 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam

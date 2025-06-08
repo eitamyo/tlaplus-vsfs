@@ -86,7 +86,7 @@ Main:
             }
         }
         else if (current_op = "write") {
-            if (write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {} \/ (\A name \in DOMAIN dir : LET i == dir[name] IN inodes[i].isDir \/ Cardinality(inodes[i].blocks) >= MaxBlocksPerFile))) {
+            if (write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {})){
                 current_op := "none";
             }
             else if (write_stage = "idle") {
@@ -158,7 +158,7 @@ Main:
 
 \* Manual translation fixes: Remove extra ':'
 
-\* BEGIN TRANSLATION (chksum(pcal) = "d2b0cfa3" /\ chksum(tla) \in STRING)
+\* BEGIN TRANSLATION (chksum(pcal) = "e7c6a9a2" /\ chksum(tla) \in STRING)
 VARIABLES freeBlocks, inodes, dir, curFileName, curINode, curBlock, 
           create_stage, write_stage, delete_stage, current_op, 
           curDeletedBlocks
@@ -227,7 +227,7 @@ Next == IF current_op = "none"
                                            write_stage, delete_stage, 
                                            curDeletedBlocks >>
                       ELSE /\ IF current_op = "write"
-                                 THEN /\ IF write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {} \/ (\A name \in DOMAIN dir : LET i == dir[name] IN inodes[i].isDir \/ Cardinality(inodes[i].blocks) >= MaxBlocksPerFile))
+                                 THEN /\ IF write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {})
                                             THEN /\ current_op' = "none"
                                                  /\ UNCHANGED << freeBlocks, 
                                                                  inodes, 
@@ -418,6 +418,6 @@ FileDeletionLiveness ==
 
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 08 13:28:40 IDT 2025 by omerzohar
+\* Last modified Sun Jun 08 13:23:26 IDT 2025 by omerzohar
 \* Last modified Fri Jun 06 18:35:58 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam

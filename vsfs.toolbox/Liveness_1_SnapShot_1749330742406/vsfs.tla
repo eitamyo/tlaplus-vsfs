@@ -344,8 +344,6 @@ AllAllocatedBlocksAreUsed ==
          inodes[i].valid /\ b \in inodes[i].blocks
          
 SomeAllocatedBlockIsUnused == ~AllAllocatedBlocksAreUsed
-
-AllocatedBlocksAreUsedAlways == []AllAllocatedBlocksAreUsed
       
       
 DeleteisUnsafe ==
@@ -370,9 +368,9 @@ SpecWithFairness == Spec
 CanCreate(name) == 
   name \notin DOMAIN dir /\ (\E i \in InodeIds : ~inodes[i].valid)
 
-FileCreationWorks ==
+FileCreationLiveness ==
   \A name \in FileNames : 
-    [] (current_op = "create" /\ curFileName = "FileName") => <> (name \in DOMAIN dir)
+    [] (CanCreate(name)) => <> (name \in DOMAIN dir)
 
 FileDeletionLiveness ==
   \A name \in FileNames :
@@ -380,6 +378,6 @@ FileDeletionLiveness ==
 
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 08 00:20:57 IDT 2025 by omerzohar
+\* Last modified Sun Jun 08 00:12:15 IDT 2025 by omerzohar
 \* Last modified Fri Jun 06 18:35:58 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam

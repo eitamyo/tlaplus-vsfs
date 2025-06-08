@@ -86,7 +86,10 @@ Main:
             }
         }
         else if (current_op = "write") {
-            if (write_stage = "idle") {
+            if (write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {})){
+                current_op := "none";
+            }
+            else if (write_stage = "idle") {
 
                 with (name \in DOMAIN dir \ {curFileName}) {
                     \* Get the inode ID for the chosen name.
@@ -100,10 +103,13 @@ Main:
                                 curINode := i;
                                 curBlock := b;
                                 freeBlocks := freeBlocks \ {b};
-                                write_stage := "block_taken"
-                            }
+                                write_stage := "block_taken";
+                            };
                         }
-                    }
+                    };
+                };
+                if (write_stage = "idle") {
+                       current_op := "none";
                 }
             }
             else if (write_stage = "block_taken") {
@@ -112,11 +118,13 @@ Main:
                 curINode := 0;
                 curBlock := 0;
                 write_stage := "idle";
-                current_op := "none";
             }
         }
         else if (current_op = "delete") {
-            if (delete_stage = "idle") {
+            if (delete_stage = "idle" /\ DOMAIN dir = {}){
+                current_op := "none";
+            }
+            else if (delete_stage = "idle") {
                 with (name \in DOMAIN dir) {
                     curFileName := name;
                     delete_stage := "remove_dir_entry";
@@ -150,7 +158,7 @@ Main:
 
 \* Manual translation fixes: Remove extra ':'
 
-\* BEGIN TRANSLATION (chksum(pcal) = "1c53cdd3" /\ chksum(tla) \in STRING)
+\* BEGIN TRANSLATION (chksum(pcal) = "4683be0" /\ chksum(tla) \in STRING)
 VARIABLES freeBlocks, inodes, dir, curFileName, curINode, curBlock, 
           create_stage, write_stage, delete_stage, current_op
 
@@ -213,83 +221,101 @@ Next == IF current_op = "none"
                            /\ UNCHANGED << freeBlocks, curBlock, 
                                            write_stage, delete_stage >>
                       ELSE /\ IF current_op = "write"
-                                 THEN /\ IF write_stage = "idle"
-                                            THEN /\ \E name \in DOMAIN dir \ {curFileName}:
-                                                      LET i == dir[name] IN
-                                                        IF inodes[i].valid /\ ~inodes[i].isDir /\ Cardinality(freeBlocks) > 0 /\ Cardinality(inodes[i].blocks) < MaxBlocksPerFile
-                                                           THEN /\ \E b \in freeBlocks:
-                                                                     /\ curFileName' = name
-                                                                     /\ curINode' = i
-                                                                     /\ curBlock' = b
-                                                                     /\ freeBlocks' = freeBlocks \ {b}
-                                                                     /\ write_stage' = "block_taken"
-                                                           ELSE /\ TRUE
-                                                                /\ UNCHANGED << freeBlocks, 
-                                                                                curFileName, 
-                                                                                curINode, 
-                                                                                curBlock, 
-                                                                                write_stage >>
-                                                 /\ UNCHANGED << inodes, 
-                                                                 current_op >>
-                                            ELSE /\ IF write_stage = "block_taken"
-                                                       THEN /\ inodes' = [inodes EXCEPT ![curINode] = [inodes[curINode] EXCEPT !.blocks = @ \cup {curBlock}, !.size = @ + 1]]
-                                                            /\ curFileName' = "None"
-                                                            /\ curINode' = 0
-                                                            /\ curBlock' = 0
-                                                            /\ write_stage' = "idle"
-                                                            /\ current_op' = "none"
-                                                       ELSE /\ TRUE
-                                                            /\ UNCHANGED << inodes, 
-                                                                            curFileName, 
-                                                                            curINode, 
-                                                                            curBlock, 
-                                                                            write_stage, 
-                                                                            current_op >>
-                                                 /\ UNCHANGED freeBlocks
-                                      /\ UNCHANGED << dir, delete_stage >>
-                                 ELSE /\ IF current_op = "delete"
-                                            THEN /\ IF delete_stage = "idle"
-                                                       THEN /\ \E name \in DOMAIN dir:
-                                                                 /\ curFileName' = name
-                                                                 /\ delete_stage' = "remove_dir_entry"
-                                                            /\ IF delete_stage' = "idle"
+                                 THEN /\ IF write_stage = "idle" /\ (freeBlocks = {} \/ DOMAIN dir = {})
+                                            THEN /\ current_op' = "none"
+                                                 /\ UNCHANGED << freeBlocks, 
+                                                                 inodes, 
+                                                                 curFileName, 
+                                                                 curINode, 
+                                                                 curBlock, 
+                                                                 write_stage >>
+                                            ELSE /\ IF write_stage = "idle"
+                                                       THEN /\ \E name \in DOMAIN dir \ {curFileName}:
+                                                                 LET i == dir[name] IN
+                                                                   IF inodes[i].valid /\ ~inodes[i].isDir /\ Cardinality(freeBlocks) > 0 /\ Cardinality(inodes[i].blocks) < MaxBlocksPerFile
+                                                                      THEN /\ \E b \in freeBlocks:
+                                                                                /\ curFileName' = name
+                                                                                /\ curINode' = i
+                                                                                /\ curBlock' = b
+                                                                                /\ freeBlocks' = freeBlocks \ {b}
+                                                                                /\ write_stage' = "block_taken"
+                                                                      ELSE /\ TRUE
+                                                                           /\ UNCHANGED << freeBlocks, 
+                                                                                           curFileName, 
+                                                                                           curINode, 
+                                                                                           curBlock, 
+                                                                                           write_stage >>
+                                                            /\ IF write_stage' = "idle"
                                                                   THEN /\ current_op' = "none"
                                                                   ELSE /\ TRUE
                                                                        /\ UNCHANGED current_op
+                                                            /\ UNCHANGED inodes
+                                                       ELSE /\ IF write_stage = "block_taken"
+                                                                  THEN /\ inodes' = [inodes EXCEPT ![curINode] = [inodes[curINode] EXCEPT !.blocks = @ \cup {curBlock}, !.size = @ + 1]]
+                                                                       /\ curFileName' = "None"
+                                                                       /\ curINode' = 0
+                                                                       /\ curBlock' = 0
+                                                                       /\ write_stage' = "idle"
+                                                                  ELSE /\ TRUE
+                                                                       /\ UNCHANGED << inodes, 
+                                                                                       curFileName, 
+                                                                                       curINode, 
+                                                                                       curBlock, 
+                                                                                       write_stage >>
+                                                            /\ UNCHANGED << freeBlocks, 
+                                                                            current_op >>
+                                      /\ UNCHANGED << dir, delete_stage >>
+                                 ELSE /\ IF current_op = "delete"
+                                            THEN /\ IF delete_stage = "idle" /\ DOMAIN dir = {}
+                                                       THEN /\ current_op' = "none"
                                                             /\ UNCHANGED << freeBlocks, 
                                                                             inodes, 
                                                                             dir, 
-                                                                            curINode >>
-                                                       ELSE /\ IF delete_stage = "remove_dir_entry"
-                                                                  THEN /\ LET i == dir[curFileName] IN
-                                                                            /\ curINode' = i
-                                                                            /\ dir' = [d \in DOMAIN dir \ {curFileName} |-> dir[d]]
-                                                                            /\ delete_stage' = "invalidate_inode"
+                                                                            curFileName, 
+                                                                            curINode, 
+                                                                            delete_stage >>
+                                                       ELSE /\ IF delete_stage = "idle"
+                                                                  THEN /\ \E name \in DOMAIN dir:
+                                                                            /\ curFileName' = name
+                                                                            /\ delete_stage' = "remove_dir_entry"
+                                                                       /\ IF delete_stage' = "idle"
+                                                                             THEN /\ current_op' = "none"
+                                                                             ELSE /\ TRUE
+                                                                                  /\ UNCHANGED current_op
                                                                        /\ UNCHANGED << freeBlocks, 
                                                                                        inodes, 
-                                                                                       curFileName, 
-                                                                                       current_op >>
-                                                                  ELSE /\ IF delete_stage = "invalidate_inode"
-                                                                             THEN /\ inodes' = [inodes EXCEPT ![curINode] = [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]]
-                                                                                  /\ delete_stage' = "free_blocks"
+                                                                                       dir, 
+                                                                                       curINode >>
+                                                                  ELSE /\ IF delete_stage = "remove_dir_entry"
+                                                                             THEN /\ LET i == dir[curFileName] IN
+                                                                                       /\ curINode' = i
+                                                                                       /\ dir' = [d \in DOMAIN dir \ {curFileName} |-> dir[d]]
+                                                                                       /\ delete_stage' = "invalidate_inode"
                                                                                   /\ UNCHANGED << freeBlocks, 
+                                                                                                  inodes, 
                                                                                                   curFileName, 
-                                                                                                  curINode, 
                                                                                                   current_op >>
-                                                                             ELSE /\ IF delete_stage = "free_blocks"
-                                                                                        THEN /\ freeBlocks' = (freeBlocks \cup inodes[curINode].blocks)
-                                                                                             /\ delete_stage' = "idle"
-                                                                                             /\ curFileName' = "None"
-                                                                                             /\ curINode' = 0
-                                                                                             /\ current_op' = "none"
-                                                                                        ELSE /\ TRUE
+                                                                             ELSE /\ IF delete_stage = "invalidate_inode"
+                                                                                        THEN /\ inodes' = [inodes EXCEPT ![curINode] = [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}]]
+                                                                                             /\ delete_stage' = "free_blocks"
                                                                                              /\ UNCHANGED << freeBlocks, 
                                                                                                              curFileName, 
                                                                                                              curINode, 
-                                                                                                             delete_stage, 
                                                                                                              current_op >>
-                                                                                  /\ UNCHANGED inodes
-                                                                       /\ dir' = dir
+                                                                                        ELSE /\ IF delete_stage = "free_blocks"
+                                                                                                   THEN /\ freeBlocks' = (freeBlocks \cup inodes[curINode].blocks)
+                                                                                                        /\ delete_stage' = "idle"
+                                                                                                        /\ curFileName' = "None"
+                                                                                                        /\ curINode' = 0
+                                                                                                        /\ current_op' = "none"
+                                                                                                   ELSE /\ TRUE
+                                                                                                        /\ UNCHANGED << freeBlocks, 
+                                                                                                                        curFileName, 
+                                                                                                                        curINode, 
+                                                                                                                        delete_stage, 
+                                                                                                                        current_op >>
+                                                                                             /\ UNCHANGED inodes
+                                                                                  /\ dir' = dir
                                             ELSE /\ TRUE
                                                  /\ UNCHANGED << freeBlocks, 
                                                                  inodes, 
@@ -339,7 +365,7 @@ FreeInodesAreUnreferencedAndBlockless ==
       /\ inodes[i].blocks = {}
       
 AllAllocatedBlocksAreUsed ==
-    /\ \A b \in Blocks \ freeBlocks:
+     \A b \in Blocks \ freeBlocks:
        \E i \in DOMAIN inodes:
          inodes[i].valid /\ b \in inodes[i].blocks
          
@@ -372,7 +398,7 @@ CanCreate(name) ==
 
 FileCreationWorks ==
   \A name \in FileNames : 
-    [] (current_op = "create" /\ curFileName = "FileName") => <> (name \in DOMAIN dir)
+    [] ((current_op = "create" /\ curFileName = name) => <> (name \in DOMAIN dir))
 
 FileDeletionLiveness ==
   \A name \in FileNames :
@@ -380,6 +406,6 @@ FileDeletionLiveness ==
 
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 08 00:20:57 IDT 2025 by omerzohar
+\* Last modified Sun Jun 08 13:11:48 IDT 2025 by omerzohar
 \* Last modified Fri Jun 06 18:35:58 IDT 2025 by eitam
 \* Created Thu Jun 05 20:42:58 IDT 2025 by eitam

@@ -1,0 +1,650 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running breadth-first search Model-Checking with fp 109 and seed -6267991528551602743 with 4 workers on 8 cores with 608MB heap and 1365MB offheap memory [pid: 43741] (Mac OS X 10.16 x86_64, AdoptOpenJDK 14.0.1 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Parsing file /Users/omerzohar/Desktop/learning/Degree-MSc/Semester1/Automatic Verification of Systems/Final Project/tlaplus-vsfs/vsfs.toolbox/Safety_1/MC.tla
+Parsing file /Users/omerzohar/Desktop/learning/Degree-MSc/Semester1/Automatic Verification of Systems/Final Project/tlaplus-vsfs/vsfs.toolbox/Safety_1/vsfs.tla
+Parsing file /Applications/TLA+ Toolbox.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.202408081326/tla2sany/StandardModules/TLC.tla
+Parsing file /Applications/TLA+ Toolbox.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.202408081326/tla2sany/StandardModules/Naturals.tla
+Parsing file /Applications/TLA+ Toolbox.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.202408081326/tla2sany/StandardModules/Sequences.tla
+Parsing file /Applications/TLA+ Toolbox.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.202408081326/tla2sany/StandardModules/FiniteSets.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module vsfs
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2025-06-08 13:20:12)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2212:0 @!@!@
+Implied-temporal checking--satisfiability problem has 5 branches.
+@!@!@ENDMSG 2212 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated at 2025-06-08 13:20:12.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 2192:0 @!@!@
+Checking 5 branches of temporal properties for the current state space with 136136 total distinct states at (2025-06-08 13:20:15)
+@!@!@ENDMSG 2192 @!@!@
+@!@!@STARTMSG 2116:1 @!@!@
+Temporal properties were violated.
+
+@!@!@ENDMSG 2116 @!@!@
+@!@!@STARTMSG 2264:1 @!@!@
+The following behavior constitutes a counter-example:
+
+@!@!@ENDMSG 2264 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ delete_stage = "idle"
+/\ curINode = 0
+/\ curFileName = "None"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {2, 3, 4}
+/\ create_stage = "idle"
+/\ write_stage = "idle"
+/\ curBlock = 0
+/\ dir = << >>
+/\ current_op = "none"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <Next line 190, col 9 to line 337, col 52 of module vsfs>
+/\ delete_stage = "idle"
+/\ curINode = 0
+/\ curFileName = "None"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {2, 3, 4}
+/\ create_stage = "idle"
+/\ write_stage = "idle"
+/\ curBlock = 0
+/\ dir = << >>
+/\ current_op = "create"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+3: <Next line 190, col 9 to line 337, col 52 of module vsfs>
+/\ delete_stage = "idle"
+/\ curINode = 1
+/\ curFileName = "f3"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> TRUE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {2, 3, 4}
+/\ create_stage = "inode_created"
+/\ write_stage = "idle"
+/\ curBlock = 0
+/\ dir = << >>
+/\ current_op = "create"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+4: <Next line 190, col 9 to line 337, col 52 of module vsfs>
+/\ delete_stage = "idle"
+/\ curINode = 0
+/\ curFileName = "None"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> TRUE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {2, 3, 4}
+/\ create_stage = "idle"
+/\ write_stage = "idle"
+/\ curBlock = 0
+/\ dir = [f3 |-> 1]
+/\ current_op = "none"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+5: <Next line 190, col 9 to line 337, col 52 of module vsfs>
+/\ delete_stage = "idle"
+/\ curINode = 0
+/\ curFileName = "None"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> TRUE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {2, 3, 4}
+/\ create_stage = "idle"
+/\ write_stage = "idle"
+/\ curBlock = 0
+/\ dir = [f3 |-> 1]
+/\ current_op = "write"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+6: <Next line 190, col 9 to line 337, col 52 of module vsfs>
+/\ delete_stage = "idle"
+/\ curINode = 1
+/\ curFileName = "f3"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> TRUE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {2, 4}
+/\ create_stage = "idle"
+/\ write_stage = "block_taken"
+/\ curBlock = 3
+/\ dir = [f3 |-> 1]
+/\ current_op = "write"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+7: <Next line 190, col 9 to line 337, col 52 of module vsfs>
+/\ delete_stage = "idle"
+/\ curINode = 0
+/\ curFileName = "None"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> TRUE, isDir |-> FALSE, size |-> 1, blocks |-> {3}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {2, 4}
+/\ create_stage = "idle"
+/\ write_stage = "idle"
+/\ curBlock = 0
+/\ dir = [f3 |-> 1]
+/\ current_op = "write"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+8: <Next line 190, col 9 to line 337, col 52 of module vsfs>
+/\ delete_stage = "idle"
+/\ curINode = 1
+/\ curFileName = "f3"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> TRUE, isDir |-> FALSE, size |-> 1, blocks |-> {3}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {4}
+/\ create_stage = "idle"
+/\ write_stage = "block_taken"
+/\ curBlock = 2
+/\ dir = [f3 |-> 1]
+/\ current_op = "write"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+9: <Next line 190, col 9 to line 337, col 52 of module vsfs>
+/\ delete_stage = "idle"
+/\ curINode = 0
+/\ curFileName = "None"
+/\ inodes = ( 0 :> [valid |-> TRUE, isDir |-> TRUE, size |-> 0, blocks |-> {}] @@
+  1 :> [valid |-> TRUE, isDir |-> FALSE, size |-> 2, blocks |-> {2, 3}] @@
+  2 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] @@
+  3 :> [valid |-> FALSE, isDir |-> FALSE, size |-> 0, blocks |-> {}] )
+/\ freeBlocks = {4}
+/\ create_stage = "idle"
+/\ write_stage = "idle"
+/\ curBlock = 0
+/\ dir = [f3 |-> 1]
+/\ current_op = "write"
+/\ curDeletedBlocks = {}
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2218:4 @!@!@
+10: Stuttering
+@!@!@ENDMSG 2218 @!@!@
+@!@!@STARTMSG 2267:0 @!@!@
+Finished checking temporal properties in 00s at 2025-06-08 13:20:16
+@!@!@ENDMSG 2267 @!@!@
+@!@!@STARTMSG 2201:0 @!@!@
+The coverage statistics at 2025-06-08 13:20:16
+@!@!@ENDMSG 2201 @!@!@
+@!@!@STARTMSG 2773:0 @!@!@
+<Init line 173, col 1 to line 173, col 4 of module vsfs>: 2:2
+@!@!@ENDMSG 2773 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 174, col 9 to line 188, col 32 of module vsfs: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<Next line 190, col 1 to line 190, col 4 of module vsfs>: 27804:39388
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 190, col 12 to line 190, col 30 of module vsfs: 27344
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 191, col 20 to line 193, col 47 of module vsfs: 2345
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 194, col 20 to line 196, col 78 of module vsfs: 7035
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 197, col 23 to line 197, col 43 of module vsfs: 24999
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 198, col 34 to line 198, col 125 of module vsfs: 6282
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 198, col 34 to line 198, col 54 of module vsfs: 6282
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 198, col 60 to line 198, col 124 of module vsfs: 1589
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 198, col 61 to line 198, col 95 of module vsfs: 1589
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 198, col 81 to line 198, col 95 of module vsfs: 5309
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 198, col 70 to line 198, col 77 of module vsfs: 1589
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 198, col 102 to line 198, col 123 of module vsfs: 989
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 199, col 42 to line 199, col 61 of module vsfs: 600
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 200, col 42 to line 202, col 69 of module vsfs: 600
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 203, col 45 to line 203, col 65 of module vsfs: 5682
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 205, col 88 to line 205, col 103 of module vsfs: 14214
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 205, col 89 to line 205, col 103 of module vsfs: 11868
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 205, col 108 to line 205, col 129 of module vsfs: 6666
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 205, col 108 to line 205, col 111 of module vsfs: 4320
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 205, col 120 to line 205, col 129 of module vsfs: 4320
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 206, col 60 to line 206, col 169 of module vsfs: 2346
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 207, col 60 to line 207, col 72 of module vsfs: 2346
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 208, col 60 to line 208, col 78 of module vsfs: 2346
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 209, col 60 to line 209, col 90 of module vsfs: 2346
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 205, col 64 to line 205, col 84 of module vsfs: 3956
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 204, col 65 to line 204, col 73 of module vsfs: 989
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 210, col 53 to line 211, col 78 of module vsfs: 2346
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 212, col 56 to line 212, col 85 of module vsfs: 4693
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 213, col 61 to line 217, col 83 of module vsfs: 4693
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 219, col 64 to line 223, col 89 of module vsfs: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 224, col 53 to line 224, col 68 of module vsfs: 4693
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 225, col 31 to line 227, col 62 of module vsfs: 7639
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 228, col 34 to line 228, col 53 of module vsfs: 18717
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 229, col 45 to line 229, col 104 of module vsfs: 7536
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 229, col 45 to line 229, col 64 of module vsfs: 7536
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 229, col 70 to line 229, col 103 of module vsfs: 2458
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 229, col 70 to line 229, col 84 of module vsfs: 2458
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 229, col 89 to line 229, col 103 of module vsfs: 1666
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 230, col 53 to line 230, col 72 of module vsfs: 797
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 231, col 53 to line 236, col 79 of module vsfs: 797
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 237, col 56 to line 237, col 75 of module vsfs: 6739
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 240, col 71 to line 240, col 188 of module vsfs: 4121
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 242, col 81 to line 246, col 111 of module vsfs: 5090
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 241, col 88 to line 241, col 97 of module vsfs: 3653
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 247, col 79 to line 247, col 82 of module vsfs: 468
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 248, col 79 to line 252, col 105 of module vsfs: 468
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 238, col 76 to line 238, col 101 of module vsfs: 1661
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 253, col 64 to line 253, col 79 of module vsfs: 5558
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 254, col 67 to line 254, col 93 of module vsfs: 5078
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 255, col 72 to line 259, col 95 of module vsfs: 5078
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 261, col 75 to line 265, col 101 of module vsfs: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 266, col 64 to line 266, col 83 of module vsfs: 5078
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 267, col 53 to line 267, col 72 of module vsfs: 10636
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 268, col 42 to line 269, col 73 of module vsfs: 11433
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 270, col 45 to line 270, col 65 of module vsfs: 11181
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 271, col 56 to line 271, col 95 of module vsfs: 11181
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 271, col 56 to line 271, col 76 of module vsfs: 11181
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 271, col 81 to line 271, col 95 of module vsfs: 1590
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 272, col 64 to line 272, col 83 of module vsfs: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 273, col 64 to line 279, col 95 of module vsfs: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 280, col 67 to line 280, col 87 of module vsfs: 11178
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 282, col 77 to line 283, col 113 of module vsfs: 3687
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 281, col 87 to line 281, col 96 of module vsfs: 1587
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 284, col 78 to line 284, col 99 of module vsfs: 3687
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 285, col 86 to line 285, col 105 of module vsfs: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 286, col 86 to line 286, col 89 of module vsfs: 3687
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 287, col 86 to line 287, col 105 of module vsfs: 3687
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 288, col 75 to line 292, col 106 of module vsfs: 3687
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 293, col 78 to line 293, col 110 of module vsfs: 9591
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 295, col 88 to line 297, col 124 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 298, col 86 to line 302, col 117 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 303, col 89 to line 303, col 121 of module vsfs: 5907
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 304, col 97 to line 304, col 139 of module vsfs: 3519
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 305, col 97 to line 305, col 197 of module vsfs: 3519
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 306, col 97 to line 306, col 125 of module vsfs: 3519
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 307, col 97 to line 310, col 122 of module vsfs: 3519
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 311, col 100 to line 311, col 127 of module vsfs: 2388
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 312, col 105 to line 317, col 127 of module vsfs: 2388
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 319, col 108 to line 324, col 139 of module vsfs: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 325, col 97 to line 325, col 112 of module vsfs: 2388
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 326, col 86 to line 326, col 95 of module vsfs: 5907
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 328, col 53 to line 335, col 84 of module vsfs: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 336, col 42 to line 336, col 78 of module vsfs: 13281
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 337, col 31 to line 337, col 52 of module vsfs: 24714
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2774:0 @!@!@
+<NoDoubleAllocation line 349, col 1 to line 349, col 18 of module vsfs>
+@!@!@ENDMSG 2774 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 350, col 3 to line 352, col 62 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 351, col 5 to line 352, col 62 of module vsfs: 111220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 352, col 7 to line 352, col 62 of module vsfs: 444880
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 352, col 8 to line 352, col 12 of module vsfs: 444880
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 352, col 19 to line 352, col 61 of module vsfs: 333660
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 351, col 14 to line 351, col 26 of module vsfs: 111220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 350, col 12 to line 350, col 24 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2774:0 @!@!@
+<AllDirEntriesPointToValidInodes line 355, col 1 to line 355, col 31 of module vsfs>
+@!@!@ENDMSG 2774 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 356, col 3 to line 357, col 48 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 357, col 14 to line 357, col 22 of module vsfs: 61401
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 357, col 27 to line 357, col 48 of module vsfs: 61401
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 356, col 15 to line 356, col 24 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2774:0 @!@!@
+<AllUsedBlocksAreAllocated line 360, col 1 to line 360, col 25 of module vsfs>
+@!@!@ENDMSG 2774 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 361, col 3 to line 367, col 36 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 361, col 6 to line 363, col 55 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 362, col 8 to line 363, col 55 of module vsfs: 111220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 362, col 8 to line 362, col 22 of module vsfs: 111220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 363, col 10 to line 363, col 55 of module vsfs: 95206
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 363, col 37 to line 363, col 55 of module vsfs: 53400
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 363, col 19 to line 363, col 34 of module vsfs: 95206
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 361, col 15 to line 361, col 27 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 364, col 6 to line 367, col 36 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 365, col 8 to line 367, col 36 of module vsfs: 21527
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 366, col 10 to line 367, col 36 of module vsfs: 86108
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 366, col 10 to line 366, col 24 of module vsfs: 86108
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 367, col 12 to line 367, col 36 of module vsfs: 69894
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 365, col 17 to line 365, col 29 of module vsfs: 21527
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 364, col 15 to line 364, col 24 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2774:0 @!@!@
+<FreeInodesAreUnreferencedAndBlockless line 370, col 1 to line 370, col 37 of module vsfs>
+@!@!@ENDMSG 2774 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 371, col 3 to line 374, col 30 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 372, col 5 to line 374, col 30 of module vsfs: 111220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 372, col 5 to line 372, col 20 of module vsfs: 111220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 373, col 7 to line 374, col 30 of module vsfs: 16014
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 373, col 10 to line 373, col 46 of module vsfs: 16014
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 373, col 34 to line 373, col 46 of module vsfs: 24486
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 373, col 22 to line 373, col 31 of module vsfs: 16014
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 374, col 10 to line 374, col 30 of module vsfs: 16014
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 371, col 12 to line 371, col 24 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2774:0 @!@!@
+<Action line 387, col 8 to line 387, col 97 of module vsfs>
+@!@!@ENDMSG 2774 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 387, col 8 to line 387, col 97 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 387, col 9 to line 387, col 66 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 387, col 9 to line 387, col 29 of module vsfs: 27805
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 387, col 34 to line 387, col 66 of module vsfs: 13201
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 387, col 72 to line 387, col 97 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 381, col 31 to line 381, col 56 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 381, col 32 to line 381, col 56 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 377, col 6 to line 379, col 50 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 378, col 8 to line 379, col 50 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||||line 379, col 10 to line 379, col 50 of module vsfs: 14736
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||||line 379, col 10 to line 379, col 24 of module vsfs: 14736
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||||line 379, col 29 to line 379, col 50 of module vsfs: 12768
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||||line 378, col 17 to line 378, col 29 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 377, col 15 to line 377, col 33 of module vsfs: 3684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2202:0 @!@!@
+End of statistics.
+@!@!@ENDMSG 2202 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(27) at 2025-06-08 13:20:16: 36,864 states generated (420,741 s/min), 27,805 distinct states found (317,348 ds/min), 2,889 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+36864 states generated, 27805 distinct states found, 2889 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished in 5293ms at (2025-06-08 13:20:16)
+@!@!@ENDMSG 2186 @!@!@
