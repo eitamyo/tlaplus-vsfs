@@ -1,6 +1,6 @@
-# vsfs: A TLA+ Specification
+# VSFS: A TLA+ Specification
 
-This repository contains a TLA+ specification for the vsfs project.
+This repository contains a TLA+ specification for the VSFS (Very Simple File System) project.
 
 ## Prerequisites
 
